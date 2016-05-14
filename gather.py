@@ -1,10 +1,5 @@
 #!/usr/bin/env python
 
-'''
-current working one using tweepy
-should fix timeout errors using rate-limt or timeout exceptions
-'''
-
 ### code to save tweets in json###
 import sys
 import tweepy
@@ -84,20 +79,21 @@ class CustomStreamListener(tweepy.StreamListener):
         print "timeout error...."
         print >> sys.stderr, 'Timeout...'
         return True  # Error handling
-sapi = tweepy.streaming.Stream(auth, CustomStreamListener(tweepy.StreamListener))
-sapi.filter(track=queries, languages=['en']);
+        
+# sapi = tweepy.streaming.Stream(auth, CustomStreamListener(tweepy.StreamListener))
+# sapi.filter(track=queries, languages=['en']);
 
-# while True:
-#     try: # error handling
-#         sapi = tweepy.streaming.Stream(auth, CustomStreamListener(tweepy.StreamListener))
-#         sapi.filter(track=queries, languages=['en']);
+while True:
+    try: # error handling
+        sapi = tweepy.streaming.Stream(auth, CustomStreamListener(tweepy.StreamListener))
+        sapi.filter(track=queries, languages=['en']);
 
-#     except:
-#         # continue to try on error
-#         print "Error Handled! Going to Sleep.."
-#         time.sleep(5)
-#         print "Run again.."
-#         continue
+    except:
+        # continue to try on error
+        print "Error Handled! Going to Sleep.."
+        time.sleep(5)
+        print "Run again.."
+        continue
 saveFile.write(']')
 
 # stream.Filter ( track = queries, locations = [-122.75,36.8,-121.75,37.8] )
