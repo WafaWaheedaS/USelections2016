@@ -25,8 +25,7 @@ queries = file.readlines()
 tweets= []
 
 
-saveFile = open('tweets_stream.json', 'a')
-saveFile.write('[')
+# saveFile.write('[')
 
 class CustomStreamListener(tweepy.StreamListener):
     def __init__(self, api):
@@ -85,6 +84,9 @@ class CustomStreamListener(tweepy.StreamListener):
 
 while True:
     try: # error handling
+        timestr = time.strftime("%Y%m%d-%H")
+        filename = "output/tweet-stream-"+timestr+".json"
+        saveFile = open(filename, 'a')
         sapi = tweepy.streaming.Stream(auth, CustomStreamListener(tweepy.StreamListener))
         sapi.filter(track=queries, languages=['en']);
 
@@ -93,7 +95,8 @@ while True:
         print "Error Handled! Going to Sleep.."
         time.sleep(5)
         print "Run again.."
+        saveFile.close()
         continue
-saveFile.write(']')
+
 
 # stream.Filter ( track = queries, locations = [-122.75,36.8,-121.75,37.8] )
